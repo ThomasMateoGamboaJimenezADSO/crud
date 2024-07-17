@@ -5,6 +5,8 @@ const telefono = document.querySelector('#Telefono')
 const direccion = document.querySelector('#Direccion')
 const tipo_Documento = document.querySelector('#Tipo_Documento')
 const documento = document.querySelector('#Documento')
+const checbox = document.querySelector('#checbox')
+const boton = document.querySelector('buttom')
 
 
 const validar  = (event) =>{
@@ -39,12 +41,7 @@ const validar  = (event) =>{
         documento.focus()
         documento.classList.add('error')
     }
-    // console.log(nombre.value);
-    // console.log(apellido.value);
-    // console.log(telefono.value);
-    // console.log(direccion.value);
-    // console.log(documento.value);
-    // console.log(tipo_Documento.value)
+
 }
 
 const remover = (e, input) =>{
@@ -54,12 +51,26 @@ const remover = (e, input) =>{
     }
 }
 
-// const llenar = (e, input) =>{
-//     if (input.value === ''){
-//         input.classList.remove('corecto')
-//         input.classList.add('error')
-//     }
-// }
+const numeros = (event) =>{
+    if (event.keyCode < 48 || event.keyCode > 57) 
+        event.preventDefault();
+}
+
+const letras = (e, input) =>{
+    
+}
+
+addEventListener('DOMContentLoaded', (event) =>{
+    if (!checbox.checked) {
+        boton.setAttribute('disabled');
+    }
+});
+
+checbox.addEventListener('change', function (event) {
+    if (event.target.checked) {
+        boton.removeAttribute('disabled')
+    }
+})
 
 $formulario.addEventListener('submit', validar);
 
@@ -82,7 +93,12 @@ documento.addEventListener('keypress', (event) =>{
     remover(event, documento)
 });
 
+telefono.addEventListener('keypress', numeros);
+documento.addEventListener('keypress', numeros);
 
-// $formulario.addEventListener('submit', function (event){
-//     event.preventDefault();
-// });
+nombre.addEventListener('keypress', (event) =>{
+    letras(event, nombre)
+});
+apellido.addEventListener('keypress', (event) =>{
+    letras(event, apellido)
+});
