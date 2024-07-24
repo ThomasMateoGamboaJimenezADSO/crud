@@ -5,9 +5,9 @@ const telefono = document.querySelector('#Telefono')
 const direccion = document.querySelector('#Direccion')
 const tipo_Documento = document.querySelector('#Tipo_Documento')
 const documento = document.querySelector('#Documento')
-const checbox = document.querySelector('#checbox')
-const boton = document.querySelector('buttom')
-
+const check = document.querySelector('#checkbox')
+const boton = document.querySelector('button')
+const correo = document.querySelector('#Correo')
 
 const validar  = (event) =>{
     event.preventDefault();
@@ -41,6 +41,11 @@ const validar  = (event) =>{
         documento.focus()
         documento.classList.add('error')
     }
+    if (correo.value === ""){
+        // alert('no hay un correo electronico')
+        correo.focus()
+        correo.classList.add('error')
+    }
 
 }
 
@@ -56,19 +61,40 @@ const numeros = (event) =>{
         event.preventDefault();
 }
 
-const letras = (e, input) =>{
-    
+const letras = (event) =>{
+    let exprecion_letras = /^[a-zA-Z\s]+$/;
+    if (exprecion_letras.test(event.key)){
+        console.log('error');
+    } 
+    else{
+        event.preventDefault();
+    }
+}
+
+const val_correo = (e, input) =>{
+    let exprecion_correo = /^[\w-._]+@[\w-._]+(\.[a-zA-Z]{2,3}){1,2}$/;
+    if (exprecion_correo.test(input.value)) {
+        input.classList.remove('error')
+        input.classList.add('correcto')
+
+    } else {
+        input.classList.remove('correcto')
+        input.classList.add('error')
+    }
 }
 
 addEventListener('DOMContentLoaded', (event) =>{
-    if (!checbox.checked) {
-        boton.setAttribute('disabled');
+    if (!check.checked) {
+        boton.setAttribute('disabled', '');
     }
 });
 
-checbox.addEventListener('change', function (event) {
+check.addEventListener('change', function (event) {
     if (event.target.checked) {
         boton.removeAttribute('disabled')
+    }
+    else{
+        boton.setAttribute('disabled', '')
     }
 })
 
@@ -92,6 +118,9 @@ tipo_Documento.addEventListener('change', (event) =>{
 documento.addEventListener('keypress', (event) =>{
     remover(event, documento)
 });
+correo.addEventListener('keypress', (event) =>{
+    remover(event, correo)
+})
 
 telefono.addEventListener('keypress', numeros);
 documento.addEventListener('keypress', numeros);
@@ -102,3 +131,7 @@ nombre.addEventListener('keypress', (event) =>{
 apellido.addEventListener('keypress', (event) =>{
     letras(event, apellido)
 });
+
+correo.addEventListener('keypress', (event) =>{
+    val_correo(event, correo)
+})
