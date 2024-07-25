@@ -9,3 +9,5 @@ const val_correo = (e, input) =>{
         input.classList.add('error')
     }
 }
+
+export default val_correo;

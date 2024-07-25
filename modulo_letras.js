@@ -7,3 +7,5 @@ const letras = (event) =>{
         event.preventDefault();
     }
 }
+
+export default letras;

@@ -4,3 +4,5 @@ const remover = (e, input) =>{
         input.classList.add('correcto')
     }
 }
+
+export default remover;
