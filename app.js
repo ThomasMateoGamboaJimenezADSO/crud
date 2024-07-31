@@ -31,7 +31,27 @@ check.addEventListener('change', function (event) {
 })
 
 $formulario.addEventListener('submit', (event) => {
-    validar(event, "form [required]")
+    let responce = validar(event, "form [required]")
+    const data = {
+        firt_name: nombre.value,
+        last_name: apellido.value,
+        addres: direccion.value,
+        type_id: tipo_Documento.value,
+        document: documento.value,
+        email: correo.value,
+        phone: telefono.value,
+    }
+    if (responce) {
+        fetch('http://localhost:3000/users',{
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json; charset=UFT-8',
+            }
+        })
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+    }
 });
 
 nombre.addEventListener('keypress', (event) =>{
