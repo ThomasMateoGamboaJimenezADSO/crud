@@ -1,8 +1,9 @@
-import validar from "./modulo_validar.js";
-import remover from "./modulo_remover.js";
-import numeros from "./modulo_numeros.js";
-import letras from "./modulo_letras.js";
-import val_correo from "./modulo_correo.js";
+import validar from "./modulos/modulo_validar.js";
+import remover from "./modulos/modulo_remover.js";
+import numeros from "./modulos/modulo_numeros.js";
+import letras from "./modulos/modulo_letras.js";
+import val_correo from "./modulos/modulo_correo.js";
+import solicitud from "./modulos/ajax.js";
 
 const $formulario = document.querySelector('form');
 const nombre = document.querySelector('#Nombre')
@@ -15,7 +16,28 @@ const check = document.querySelector('#checkbox')
 const boton = document.querySelector('button')
 const correo = document.querySelector('#Correo')
 
+const docs = () => {
+    const fracmento = document.createDocumentFragment();
+    fetch('http://localhost:3000/documents')
+    .then((response) => response.json())
+    .then((data) => {
+        data.forEach(element => {
+            let option = document.createElement('option');
+            option.value = element.id;
+            option.textContent = element.name
+            fracmento.appendChild(option);
+        });
+        tipo_Documento.appendChild(fracmento);
+    });
+}
+
+const listar = () =>{
+    let data = solicitud('users');
+    console.log(data);
+}
+
 addEventListener('DOMContentLoaded', (event) =>{
+    docs();
     if (!check.checked) {
         boton.setAttribute('disabled', '');
     }
