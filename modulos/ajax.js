@@ -1,9 +1,9 @@
-const solicitud = () =>{
-    fetch('http://127.0.0.1:3000/${url}')
-    .then((response) => response.json())
-    .then((json) => {
-        return json
-    });
+import { URL } from "../config.js";
+
+const solicitud = async (url) =>{
+    let solicitud = await fetch(`${URL}/users`);
+    let data = await solicitud.json();
+    return data;
 }
 
 export default solicitud;

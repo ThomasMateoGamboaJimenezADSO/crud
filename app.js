@@ -4,23 +4,29 @@ import numeros from "./modulos/modulo_numeros.js";
 import letras from "./modulos/modulo_letras.js";
 import val_correo from "./modulos/modulo_correo.js";
 import solicitud from "./modulos/ajax.js";
+import {URL} from "./config.js";
 
 const $formulario = document.querySelector('form');
-const nombre = document.querySelector('#Nombre')
-const apellido = document.querySelector('#Apellido')
-const telefono = document.querySelector('#Telefono')
-const direccion = document.querySelector('#Direccion')
-const tipo_Documento = document.querySelector('#Tipo_Documento')
-const documento = document.querySelector('#Documento')
-const check = document.querySelector('#checkbox')
-const boton = document.querySelector('button')
-const correo = document.querySelector('#Correo')
+const nombre = document.querySelector('#Nombre');
+const apellido = document.querySelector('#Apellido');
+const telefono = document.querySelector('#Telefono');
+const direccion = document.querySelector('#Direccion');
+const tipo_Documento = document.querySelector('#Tipo_Documento');
+const documento = document.querySelector('#Documento');
+const check = document.querySelector('#checkbox');
+const boton = document.querySelector('button');
+const correo = document.querySelector('#Correo');
+const tbusers = document.querySelector('#tp_users')
 
 const docs = () => {
     const fracmento = document.createDocumentFragment();
     fetch('http://localhost:3000/documents')
     .then((response) => response.json())
     .then((data) => {
+        let option = document.createElement('option');
+        option.textContent = 'seleccione ...';
+        option.value = ''
+        fracmento.appendChild(option);
         data.forEach(element => {
             let option = document.createElement('option');
             option.value = element.id;
@@ -31,9 +37,11 @@ const docs = () => {
     });
 }
 
-const listar = () =>{
-    let data = solicitud('users');
-    console.log(data);
+const listar = async () =>{
+    const data = await solicitud('users');
+    data.forEach(element =>{
+
+    })
 }
 
 addEventListener('DOMContentLoaded', (event) =>{
@@ -58,11 +66,36 @@ $formulario.addEventListener('submit', (event) => {
         firt_name: nombre.value,
         last_name: apellido.value,
         addres: direccion.value,
+        phone: telefono.value,
         type_id: tipo_Documento.value,
         document: documento.value,
         email: correo.value,
-        phone: telefono.value,
     }
+
+    if (responce) {
+        fetch(`${URL}/users`,{
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json; charset=UFT-8',
+            }
+        })
+        .then(() =>{
+            alert('Sus datos fueron guardados correctamente')
+            nombre.value = ''
+            apellido.value = ''
+            direccion.value = ''
+            telefono.value = ''
+            correo.value = ''
+            tipo_Documento.value = ''
+            documento.value = ''
+            check.checked = false
+        })
+        .catch(() =>{
+            alert('error')
+        })
+    }
+
     if (responce) {
         fetch('http://localhost:3000/users',{
             method: 'POST',

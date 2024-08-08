@@ -7,37 +7,63 @@
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    
-    <form id="CRUD" novalidate>
-        <label for="Nombre">Nombre</label>
-        <input type="text" id="Nombre"  autocomplete="off" required>
+    <div class="container layout mt-40 mb-40" >
+        <form id="CRUD" novalidate>
+            <label for="Nombre">Nombre</label>
+            <input type="text" id="Nombre"  autocomplete="off" required>
 
-        <label for="Apellido">Apellido</label>
-        <input type="text" id="Apellido" autocomplete="off" required> 
+            <label for="Apellido">Apellido</label>
+            <input type="text" id="Apellido" autocomplete="off" required> 
 
-        <label for="Telefono">Telefono</label>
-        <input type="tel" id="Telefono" autocomplete="off" required>
+            <label for="Telefono">Telefono</label>
+            <input type="tel" id="Telefono" autocomplete="off" required>
 
-        <label for="Direccion">Direccion</label>
-        <input type="text" id="Direccion" autocomplete="off" required>
+            <label for="Direccion">Direccion</label>
+            <input type="text" id="Direccion" autocomplete="off" required>
 
-        <label for="Tipo Documento">Tipo Documento</label>
-        <select name="Tipo_Documento" id="Tipo_Documento" required></select>
+            <label for="Tipo Documento">Tipo Documento</label>
+            <select name="Tipo_Documento" id="Tipo_Documento" required></select>
 
-        <label for="Documento">Documento</label>
-        <input type="text" id="Documento" autocomplete="off" required>
+            <label for="Documento">Documento</label>
+            <input type="text" id="Documento" autocomplete="off" required>
 
-        <label for="Correo">Correo Electronico</label>
-        <input type="text" id="Correo" autocomplete="off" required>
+            <label for="Correo">Correo Electronico</label>
+            <input type="text" id="Correo" autocomplete="off" required>
 
-        <div class="politicas">
-            <label for="checkbox">Acepta nuestras politicas de uso de datos</label>
-            <input type="checkbox" id="checkbox" required>
+            <div class="politicas">
+                <label for="checkbox">Acepta nuestras politicas de uso de datos</label>
+                <input type="checkbox" id="checkbox" required>
+            </div>
+
+            <button type="submit">Enviar</button>    
+        </form>
+        <div class="table">
+            <table>
+                <thead>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Telefono</th>
+                    <th>Direccion</th>
+                    <th>Tipo_Documento</th>
+                    <th>Documento</th>
+                    <th>Correo</th>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
+    </div>
+    <template id="tp_users">
+        <tr>
+            <td class="Nombre"></td>
+            <td class="Apellido"></td>
+            <td class="Telefono"></td>
+            <td class="Direccion"></td>
+            <td class="Tipo_Documento"></td>
+            <td class="Documento"></td>
+            <td class="Correo"></td>
+        </tr>
+    </template>
 
-        <button type="submit">Enviar</button>
-            
-    </form>
     <script src="app.js" type="module"></script>
 </body>
 </html>
