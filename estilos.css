@@ -19,20 +19,37 @@
 
 .layout{
     display: grid;
-    grid-template-areas: 'form table';
-    grid-template-columns: 400px 1fr;
-    gap: 1rem;
+    grid-template-areas: "form grid-container";
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+
 form{
-    max-width: 450px;
-    width: 450px;
-    margin: 0 auto;
-    background-color: #f2f2f2;
-    padding: 30px;
+    background-color: #ffffff;
+    border: 2px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 20px;
 }
 
 input , select, button{
@@ -40,6 +57,7 @@ input , select, button{
     border: solid 1px #cecece;
     border-radius: 8px;
     outline: none;
+    font-size: 16px;
 }
 
 button{
@@ -47,12 +65,24 @@ button{
     color: #cecece;
     cursor: pointer;
     font-weight: 700;
-    transition: all 0.5s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 button:hover{
     background-color: #cecece;
     color: #383838;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background-color: #b0bec5;
+    opacity: 0.7;
+}
+
+label {
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .error{

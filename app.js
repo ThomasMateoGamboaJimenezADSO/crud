@@ -16,11 +16,24 @@ const documento = document.querySelector('#Documento');
 const check = document.querySelector('#checkbox');
 const boton = document.querySelector('button');
 const correo = document.querySelector('#Correo');
-const tbusers = document.querySelector('#tp_users')
+const tbusers = document.querySelector('#tp_users').content;
+const fracmento = document.createDocumentFragment();
+const tbody = document.querySelector('tbody');
+
+const cantidad = (elemento) =>{
+    let valor = elemento.value.length === 10;
+    if (valor) {
+        console.log('correcto')
+    }
+    else{
+        elemento.classList.remove('correcto')
+        elemento.classList.add('error')
+    }
+}
 
 const docs = () => {
     const fracmento = document.createDocumentFragment();
-    fetch('http://localhost:3000/documents')
+    fetch(`${URL}documents`)
     .then((response) => response.json())
     .then((data) => {
         let option = document.createElement('option');
@@ -39,13 +52,48 @@ const docs = () => {
 
 const listar = async () =>{
     const data = await solicitud('users');
+    const documentos = await solicitud('documents')
     data.forEach(element =>{
-
+        tbusers.querySelector('.Nombre').textContent = element.firt_name;
+        tbusers.querySelector('.Apellido').textContent = element.last_name;
+        tbusers.querySelector('.Telefono').textContent = element.phone;
+        tbusers.querySelector('.Direccion').textContent = element.addres;
+        tbusers.querySelector('.Tipo_Documento').textContent = element.type_id;
+        tbusers.querySelector('.Documento').textContent = element.document;
+        tbusers.querySelector('.Correo').textContent = element.email; 
+        tbusers.querySelector('.Eliminar').setAttribute('data-id', element.id);   
+        tbusers.querySelector('.Modificar').setAttribute('data-id', element.id);   
+        const clone = document.importNode(tbusers, true)
+        fracmento.appendChild(clone);
     })
+}
+
+const createRow = (data) =>{
+    const tr = tbody.insertRow(-1);
+    const tbNombre = tr.insertCell(0)
+    const tbApellido = tr.insertCell(1)
+    const tbTelefono = tr.insertCell(2)
+    const tbDireccion = tr.insertCell(3)
+    const tbTipo = tr.insertCell(4)
+    const tbDocumento = tr.insertCell(5)
+    const tbCorreo = tr.insertCell(6)
+    tbNombre.textContent = data.firt_name;
+    tbApellido.textContent = data.last_name;
+    tbTelefono.textContent = data.phone;
+    tbDireccion.textContent = data.addres;
+    tbTipo.textContent = data.type_id;
+    tbDocumento.textContent = data.document;
+    tbCorreo.textContent = data.email;
+}
+
+const buscar = (element) =>{
+    console.log(element.dataset.id);
+    
 }
 
 addEventListener('DOMContentLoaded', (event) =>{
     docs();
+    listar();
     if (!check.checked) {
         boton.setAttribute('disabled', '');
     }
@@ -53,10 +101,7 @@ addEventListener('DOMContentLoaded', (event) =>{
 
 check.addEventListener('change', function (event) {
     if (event.target.checked) {
-        boton.removeAttribute('disabled')
-    }
-    else{
-        boton.setAttribute('disabled', '')
+        boton.removeAttribute('disabled', '')
     }
 })
 
@@ -73,14 +118,15 @@ $formulario.addEventListener('submit', (event) => {
     }
 
     if (responce) {
-        fetch(`${URL}/users`,{
+        fetch(`${URL}users`,{
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
                 'Content-type': 'application/json; charset=UFT-8',
             }
         })
-        .then(() =>{
+        .then((responce) => responce.json())
+        .then((json) =>{
             alert('Sus datos fueron guardados correctamente')
             nombre.value = ''
             apellido.value = ''
@@ -90,6 +136,7 @@ $formulario.addEventListener('submit', (event) => {
             tipo_Documento.value = ''
             documento.value = ''
             check.checked = false
+            createRow(json)
         })
         .catch(() =>{
             alert('error')
@@ -97,7 +144,7 @@ $formulario.addEventListener('submit', (event) => {
     }
 
     if (responce) {
-        fetch('http://localhost:3000/users',{
+        fetch(`${URL}users`,{
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -134,6 +181,10 @@ correo.addEventListener('keypress', (event) =>{
 telefono.addEventListener('keypress', numeros);
 documento.addEventListener('keypress', numeros);
 
+telefono.addEventListener('blur', () =>{
+    cantidad(telefono)
+})
+
 nombre.addEventListener('keypress', (event) =>{
     letras(event, nombre)
 });
@@ -143,4 +194,10 @@ apellido.addEventListener('keypress', (event) =>{
 
 correo.addEventListener('keypress', (event) =>{
     val_correo(event, correo)
+})
+
+document.addEventListener('click', (event) =>{
+    if (event.target.matches('.Modificar')) {
+        buscar(event.target)
+    }
 })
