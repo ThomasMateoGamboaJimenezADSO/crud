@@ -8,9 +8,11 @@ const solicitud = async (url) =>{
 
 const enviar = async (endpoint, options) =>{
     try {
-        let solicitud = await fetch(`${URL}`) 
-        let data = await solicitud
-
+        let solicitud = await fetch(`${URL}${endpoint}`, options) 
+        let data = await solicitud.json();
+    }
+    catch{
+        
     }
 }
 

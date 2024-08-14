@@ -87,7 +87,7 @@ const createRow = (data) =>{
 }
 
 const buscar = (element) =>{
-    console.log(element.dataset.id);
+    
     
 }
 
